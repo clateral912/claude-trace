@@ -1,0 +1,23 @@
+# ── 抓包数据(含真实 Authorization token,绝不上 git;且体量可达数 GB)──
+dumps/
+_archive_reverse_proxy/
+
+# ── 运行日志 ──
+*.log
+nohup.out
+watchdog.run.log
+
+# ── 生成的可视化产物(可由 session_timeline.py 重新生成)──
+session_timeline.png
+session_timeline.svg
+session_timeline.html
+viz.png
+viz.svg
+viz.html
+
+# ── Python / 系统杂项 ──
+__pycache__/
+*.pyc
+.DS_Store
+*.swp
+*.swo
