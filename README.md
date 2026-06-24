@@ -12,6 +12,41 @@
 
 ---
 
+## Quickstart
+
+```bash
+# ── mitmproxy 需要 Python >= 3.12 ───────────────────────────────────────────
+# 最简单其实是用 Homebrew(自带新 Python,可跳过下面一整段):
+#     brew install mitmproxy && pip3 install --user matplotlib
+# 否则按下面来:自动判断 Python 版本,不够新就用 uv 装一个带 3.12 的本地 venv。
+
+# 1) 检查当前 python3 是否 >= 3.12
+if python3 -c 'import sys; sys.exit(0 if sys.version_info >= (3, 12) else 1)'; then
+    PY=python3                                  # 够新,直接用它
+else
+    # 2) 不够新:用 uv 创建一个带 Python 3.12 的本地 venv(uv 会自动下载 3.12)
+    #    没装 uv 就先装:  curl -LsSf https://astral.sh/uv/install.sh | sh
+    uv venv --python 3.12 .venv
+    .venv/bin/python -m ensurepip --upgrade     # 确保 venv 里带上 pip
+    PY=.venv/bin/python
+fi
+
+# 3) 用(够新的)Python 的 pip 安装依赖:mitmproxy + matplotlib
+"$PY" -m pip install -r requirements.txt
+
+# 4) 安装 shell 包装(把 claude / claude-trace 写入你的 rc)
+./install.sh
+
+# 5) 后台常驻启动抓包代理(进入独立 session,关终端也不停)
+./proxyctl.sh start
+```
+
+启动后**新开一个终端**,在任意目录直接敲 `claude` 即被抓包(dump 到 `dumps/`);
+mitmweb 网页界面在 http://127.0.0.1:8081。`start-mitm.sh` 会自动从 PATH 或本仓库
+`.venv/bin` 里找到 `mitmweb`,所以用上面 venv 方式装的也能直接 `./proxyctl.sh start`。
+
+---
+
 ## 它能抓到什么
 
 每个请求一个目录 `dumps/<UTC时间戳>_<flowid>/`:

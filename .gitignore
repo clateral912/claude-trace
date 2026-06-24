@@ -24,3 +24,6 @@ __pycache__/
 
 # 守护 PID 文件
 .proxy.pid
+
+# uv/venv
+.venv/

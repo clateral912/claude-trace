@@ -13,8 +13,11 @@ cd "$(dirname "$0")"
 export DUMP_DIR="$(pwd)/dumps"
 mkdir -p "$DUMP_DIR"
 
-# 定位 mitmweb(pip 可能装在 framework bin,不在默认 PATH)
+# 定位 mitmweb:① PATH(brew 安装)→ ② 本仓库的 .venv(Quickstart 用 uv 建的)→ ③ 兜底
 MITMWEB="$(command -v mitmweb || true)"
+if [ -z "$MITMWEB" ] && [ -x "./.venv/bin/mitmweb" ]; then
+  MITMWEB="$(pwd)/.venv/bin/mitmweb"
+fi
 if [ -z "$MITMWEB" ]; then
   MITMWEB="/Library/Frameworks/Python.framework/Versions/3.13/bin/mitmweb"
 fi
