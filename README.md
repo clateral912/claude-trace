@@ -34,12 +34,25 @@ system+messages+tools 总和,另有 `cache_read/creation_input_tokens`)。
 
 ## 依赖
 
+> ⚠️ **mitmproxy ≥ 10 需要 Python ≥ 3.12**(12.x 要求 `>=3.12`)。macOS 自带 / Xcode 命令行
+> 工具里的 Python 通常是 3.9,会报 `Could not find a version that satisfies mitmproxy>=12`
+> ——那不是版本写错,是你的 Python 太老。
+
+**推荐(最省事):用 Homebrew,自带新 Python,绕开系统 3.9**
 ```bash
-pip install -r requirements.txt        # mitmproxy, matplotlib
+brew install mitmproxy           # 提供 mitmdump / mitmweb / mitmproxy
+pip3 install --user matplotlib   # 仅可视化用;只抓包可不装
 ```
 
-`mitmproxy` 首次运行会在 `~/.mitmproxy/` 生成 CA 证书(`mitmproxy-ca-cert.pem`),包装脚本通过
-`NODE_EXTRA_CA_CERTS` 让 Claude Code 信任它。
+**或:用 ≥3.12 的 Python 建 venv**
+```bash
+brew install python@3.12
+python3.12 -m venv ~/.venv/claude-trace
+~/.venv/claude-trace/bin/pip install -r requirements.txt
+```
+
+`start-mitm.sh` 会自动定位 PATH 里的 `mitmweb`。首次运行 mitmproxy 会在 `~/.mitmproxy/` 生成 CA
+证书(`mitmproxy-ca-cert.pem`),包装脚本通过 `NODE_EXTRA_CA_CERTS` 让 Claude Code 信任它。
 
 ---
 

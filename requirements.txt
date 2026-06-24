@@ -1,2 +1,4 @@
+# 需要 Python >= 3.12(mitmproxy 12 的要求)。
+# macOS 自带 / Xcode 的 Python 3.9 装不上,推荐改用:  brew install mitmproxy
 mitmproxy>=12
 matplotlib>=3.7
