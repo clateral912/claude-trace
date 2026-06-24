@@ -21,3 +21,6 @@ __pycache__/
 .DS_Store
 *.swp
 *.swo
+
+# 守护 PID 文件
+.proxy.pid
